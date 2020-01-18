@@ -1,19 +1,12 @@
 import {
-  ActionReducer,
   ActionReducerMap,
-  createFeatureSelector,
-  createSelector,
-  MetaReducer
 } from '@ngrx/store';
-import { environment } from '../../environments/environment';
+import { FormState, FormReducer } from '../reali/store/reducer/form.reducer';
 
 export interface State {
-
+  formState: FormState;
 }
 
 export const reducers: ActionReducerMap<State> = {
-
+  formState: FormReducer
 };
-
-
-export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];

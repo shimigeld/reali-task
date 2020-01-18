@@ -1,21 +1,21 @@
-<div gdAreas="header header | content content | footer footer" gdGap="16px" gdRows="auto auto auto" fxFlexFill>
+<div gdAreas="header header | content content | footer footer" gdGap="2%" gdRows="auto auto auto" fxFlexFill>
     <div gdArea="header" fxLayoutAlign="space-around center">
-        <button mat-stroked-button>1</button>
-        <button mat-stroked-button>2</button>
-        <button mat-stroked-button>3</button>
+        <button mat-stroked-button value="1" (click)="onButtonClick($event.target.value)">1</button>
+        <button mat-stroked-button value="2" (click)="onButtonClick($event.target.value)" [disabled]="!this.group.controls.name.value || !this.group.controls.name.valid">2</button>
+        <button mat-stroked-button value="3" (click)="onButtonClick($event.target.value)" [disabled]="!this.group.controls.email.value || !this.group.controls.email.valid">3</button>
     </div>
   <div gdArea="content">
     <form [formGroup]="group">
-        <div fxLayout="column" fxLayoutAlign="space-evenly center">
-            <mat-form-field>
-                <input matInput placeholder="1. Name:" formControlName="name">
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput placeholder="2. Email:" formControlName="email">
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput placeholder="3. Phone:" formControlName="phone">
-            </mat-form-field>
+        <div fxLayout="column" [ngSwitch]="fieldSelected" fxLayoutAlign="space-evenly center">
+                <mat-form-field *ngSwitchCase="1">
+                    <input  matInput placeholder="1. Name:" formControlName="name">
+                </mat-form-field>
+                <mat-form-field *ngSwitchCase="2">
+                    <input matInput placeholder="2. Email:" formControlName="email">
+                </mat-form-field>
+                <mat-form-field *ngSwitchCase="3">
+                    <input matInput placeholder="3. Phone:" formControlName="phone">
+                </mat-form-field>
         </div>
     </form>
   </div>

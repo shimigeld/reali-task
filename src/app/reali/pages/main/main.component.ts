@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class MainComponent implements OnInit {
   public group: FormGroup;
-
+  public fieldSelected = 1;
   constructor(fb: FormBuilder) {
     this.group = fb.group({
      name: ['', Validators.required],
@@ -17,7 +17,12 @@ export class MainComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  ngOnInit() {   
+  }
+
+  public onButtonClick(value: string): void {
+    this.fieldSelected = +value;
+    console.debug(value);
   }
 
 }
