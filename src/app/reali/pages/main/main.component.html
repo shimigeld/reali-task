@@ -1,0 +1,53 @@
+<div gdAreas="header header | content content | footer footer" gdGap="16px" gdRows="auto auto auto" fxFlexFill>
+    <div gdArea="header" fxLayoutAlign="space-around center">
+        <button mat-stroked-button>1</button>
+        <button mat-stroked-button>2</button>
+        <button mat-stroked-button>3</button>
+    </div>
+  <div gdArea="content">
+    <form [formGroup]="group">
+        <div fxLayout="column" fxLayoutAlign="space-evenly center">
+            <mat-form-field>
+                <input matInput placeholder="1. Name:" formControlName="name">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="2. Email:" formControlName="email">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="3. Phone:" formControlName="phone">
+            </mat-form-field>
+        </div>
+    </form>
+  </div>
+  <div gdArea="footer">
+    <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%">
+        <button mat-raised-button color="warn">Submit</button>
+        <button mat-raised-button>Clear</button>
+    </div>
+  </div>
+</div>
+
+<!-- <div fxLayout="row" fxLayoutAlign="space-evenly center">
+    <button mat-stroked-button>1</button>
+    <button mat-stroked-button>2</button>
+    <button mat-stroked-button>3</button>
+</div>
+<div fxLayout="row" fxLayoutAlign="center">
+    <form [formGroup]="group">
+        <div fxLayout="column" fxLayoutAlign="center center">
+            <mat-form-field>
+                <input matInput placeholder="1. Name:" formControlName="name">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="2. Email:" formControlName="email">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="3. Phone:" formControlName="phone">
+            </mat-form-field>
+        </div>
+    </form>
+</div>
+<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%">
+    <button mat-raised-button color="warn">Submit</button>
+    <button mat-raised-button>Clear</button>
+</div> -->
