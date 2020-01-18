@@ -8,13 +8,13 @@
     <form [formGroup]="group">
         <div fxLayout="column" [ngSwitch]="fieldSelected" fxLayoutAlign="space-evenly center">
                 <mat-form-field *ngSwitchCase="1">
-                    <input  matInput placeholder="1. Name:" formControlName="name">
+                    <input matInput placeholder="1. Name:" formControlName="name" (input)="onInputChange($event.target.value)">
                 </mat-form-field>
                 <mat-form-field *ngSwitchCase="2">
-                    <input matInput placeholder="2. Email:" formControlName="email">
+                    <input matInput placeholder="2. Email:" formControlName="email" (input)="onInputChange($event.target.value)">
                 </mat-form-field>
                 <mat-form-field *ngSwitchCase="3">
-                    <input matInput placeholder="3. Phone:" formControlName="phone">
+                    <input matInput placeholder="3. Phone:" formControlName="phone" (input)="onInputChange($event.target.value)">
                 </mat-form-field>
         </div>
     </form>

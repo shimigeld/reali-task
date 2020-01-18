@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { of, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, last } from 'rxjs/operators';
 
 @Component({
   selector: 'app-main',
@@ -23,6 +25,16 @@ export class MainComponent implements OnInit {
   public onButtonClick(value: string): void {
     this.fieldSelected = +value;
     console.debug(value);
+  }
+
+  public onInputChange(input: string): void {
+    const $input = of(input).pipe(debounceTime(500),
+                  distinctUntilChanged(),
+                  filter((query: string) => query.length > 2))
+          .subscribe(res => console.debug(res));
+
+
+    $input.unsubscribe();
   }
 
 }
