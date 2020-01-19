@@ -68,6 +68,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
   public onSubmitClick(): void {
     if (this.group.valid) {
+      this.fieldSelected = null;
       this.store.dispatch(submitForm());
     }
   }
