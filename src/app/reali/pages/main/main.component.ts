@@ -45,6 +45,11 @@ export class MainComponent implements OnInit, OnDestroy {
         this.fieldSelected = 'name';
         this.buttonsDisabled = true;
       }
+
+      if (this.formState === 'submitted') {
+        this.fieldSelected = null;
+        this.buttonsDisabled = true;
+      }
     });
 
     this.store.select(selectIsFormValid).subscribe((isValid: boolean) => {
@@ -84,7 +89,6 @@ export class MainComponent implements OnInit, OnDestroy {
 
   public onSubmitClick(): void {
     if (this.group.valid) {
-      this.fieldSelected = null;
       this.store.dispatch(submitForm());
     }
   }
