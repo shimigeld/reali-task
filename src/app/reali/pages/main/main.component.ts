@@ -42,6 +42,8 @@ export class MainComponent implements OnInit, OnDestroy {
 
       if (this.formState === 'reset') {
         this.group.reset();
+        this.fieldSelected = 'name';
+        this.buttonsDisabled = true;
       }
     });
 
@@ -88,8 +90,6 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   public onClearClick(): void {
-    this.fieldSelected = 'name';
-    this.buttonsDisabled = true;
     this.store.dispatch(resetForm());
   }
 

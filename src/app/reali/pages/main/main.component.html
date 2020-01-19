@@ -48,7 +48,7 @@
   </div>
   <div gdArea="footer">
     <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%">
-        <button mat-raised-button color="warn" [disabled]="!isFormValid" (click)="onSubmitClick()">Submit</button>
+        <button mat-raised-button color="warn" [disabled]="!isFormValid || !this.group.valid" (click)="onSubmitClick()">Submit</button>
         <button mat-raised-button (click)="onClearClick()">Clear</button>
     </div>
   </div>
