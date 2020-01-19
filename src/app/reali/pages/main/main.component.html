@@ -6,48 +6,35 @@
     </div>
   <div gdArea="content">
     <form [formGroup]="group">
-        <div fxLayout="column" [ngSwitch]="fieldSelected" fxLayoutAlign="space-evenly center">
-                <mat-form-field *ngSwitchCase="'name'">
-                    <input matInput placeholder="1. Name:" formControlName="name" (input)="onInputChange($event.target.value, fieldSelected)">
-                </mat-form-field>
-                <mat-form-field *ngSwitchCase="'email'">
-                    <input matInput placeholder="2. Email:" formControlName="email" (input)="onInputChange($event.target.value, fieldSelected)">
-                </mat-form-field>
-                <mat-form-field *ngSwitchCase="'phone'">
-                    <input matInput placeholder="3. Phone:" formControlName="phone" (input)="onInputChange($event.target.value, fieldSelected)">
-                </mat-form-field>
+        <div *ngIf="!isSubmit" fxLayout="column" [ngSwitch]="fieldSelected" fxLayoutAlign="space-evenly center">
+            <mat-form-field *ngSwitchCase="'name'">
+                <input matInput placeholder="1. Name:" formControlName="name" (input)="onInputChange($event.target.value, fieldSelected)">
+            </mat-form-field>
+            <mat-form-field *ngSwitchCase="'email'">
+                <input matInput placeholder="2. Email:" formControlName="email" (input)="onInputChange($event.target.value, fieldSelected)">
+            </mat-form-field>
+            <mat-form-field *ngSwitchCase="'phone'">
+                <input matInput placeholder="3. Phone:" formControlName="phone" (input)="onInputChange($event.target.value, fieldSelected)">
+            </mat-form-field>
         </div>
+        <div *ngIf="isSubmit" fxLayout="column"fxLayoutAlign="space-evenly center">
+              <h4 style="text-align: center;">Submitted:</h4>
+            <mat-form-field>
+                <input matInput placeholder="1. Name:" formControlName="name" [readonly]="true">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="2. Email:" formControlName="email" [readonly]="true">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="3. Phone:" formControlName="phone" [readonly]="true">
+            </mat-form-field>
+          </div>
     </form>
   </div>
   <div gdArea="footer">
     <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%">
-        <button mat-raised-button color="warn">Submit</button>
-        <button mat-raised-button>Clear</button>
+        <button mat-raised-button color="warn" [disabled]="this.group.invalid" (click)="onSubmitClick()">Submit</button>
+        <button mat-raised-button (click)="onClearClick()">Clear</button>
     </div>
   </div>
 </div>
-
-<!-- <div fxLayout="row" fxLayoutAlign="space-evenly center">
-    <button mat-stroked-button>1</button>
-    <button mat-stroked-button>2</button>
-    <button mat-stroked-button>3</button>
-</div>
-<div fxLayout="row" fxLayoutAlign="center">
-    <form [formGroup]="group">
-        <div fxLayout="column" fxLayoutAlign="center center">
-            <mat-form-field>
-                <input matInput placeholder="1. Name:" formControlName="name">
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput placeholder="2. Email:" formControlName="email">
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput placeholder="3. Phone:" formControlName="phone">
-            </mat-form-field>
-        </div>
-    </form>
-</div>
-<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%">
-    <button mat-raised-button color="warn">Submit</button>
-    <button mat-raised-button>Clear</button>
-</div> -->
