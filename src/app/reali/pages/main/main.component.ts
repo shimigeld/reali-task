@@ -1,8 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+
 import { of, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, last } from 'rxjs/operators';
-import { Store } from '@ngrx/store';
+
 import { State } from 'src/app/reducers';
 import { setName, setEmail, setPhone, resetForm, submitForm } from '../../store/actions/form.actions';
 import { selectForm } from '../../store/selectors/form.selectors';
