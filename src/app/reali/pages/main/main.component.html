@@ -9,12 +9,27 @@
         <div *ngIf="!isSubmit" fxLayout="column" [ngSwitch]="fieldSelected" fxLayoutAlign="space-evenly center">
             <mat-form-field *ngSwitchCase="'name'">
                 <input matInput placeholder="1. Name:" formControlName="name" (input)="onInputChange($event.target.value, fieldSelected)">
+                <mat-error *ngIf="this.group.controls.name.hasError('required')">
+                  Name is <strong>required</strong>
+                </mat-error>
             </mat-form-field>
             <mat-form-field *ngSwitchCase="'email'">
                 <input matInput placeholder="2. Email:" formControlName="email" (input)="onInputChange($event.target.value, fieldSelected)">
+                <mat-error *ngIf="this.group.controls.email.hasError('required')">
+                  Email is <strong>required</strong>
+                </mat-error>
+                <mat-error *ngIf="this.group.controls.email.hasError('email')">
+                  Email is <strong>Invalid</strong>
+                </mat-error>
             </mat-form-field>
             <mat-form-field *ngSwitchCase="'phone'">
                 <input matInput placeholder="3. Phone:" formControlName="phone" (input)="onInputChange($event.target.value, fieldSelected)">
+                <mat-error *ngIf="this.group.controls.phone.hasError('required')">
+                  Phone is <strong>required</strong>
+                </mat-error>
+                <mat-error *ngIf="this.group.controls.phone.hasError('pattern')">
+                  Phone pattern is <strong>Invalid</strong>
+                </mat-error>
             </mat-form-field>
         </div>
         <div *ngIf="isSubmit" fxLayout="column"fxLayoutAlign="space-evenly center">

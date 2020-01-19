@@ -23,7 +23,7 @@ export class MainComponent implements OnInit, OnDestroy {
     this.group = fb.group({
      name: ['', Validators.required],
      email: ['', [Validators.required, Validators.email]],
-     phone: ['', [Validators.required]]
+     phone: ['', [Validators.required, Validators.pattern(/^0\d([\d]{0,1})([-]{0,1})\d{7}$/)]]
     });
   }
 
