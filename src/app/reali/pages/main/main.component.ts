@@ -10,7 +10,8 @@ import { debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
 })
 export class MainComponent implements OnInit {
   public group: FormGroup;
-  public fieldSelected = 1;
+  public fieldSelected = 'name';
+  public buttonsDisabled = true;
   constructor(fb: FormBuilder) {
     this.group = fb.group({
      name: ['', Validators.required],
@@ -19,22 +20,33 @@ export class MainComponent implements OnInit {
     });
   }
 
-  ngOnInit() {   
+  ngOnInit() {
   }
 
-  public onButtonClick(value: string): void {
-    this.fieldSelected = +value;
-    console.debug(value);
+  public onButtonClick(type: string): void {
+    this.fieldSelected = type;
+    this.CheckIfDisableButtons(type);
+    console.debug(type);
   }
 
-  public onInputChange(input: string): void {
+  public onInputChange(input: string, type: string): void {
     const $input = of(input).pipe(debounceTime(500),
-                  distinctUntilChanged(),
-                  filter((query: string) => query.length > 2))
-          .subscribe(res => console.debug(res));
+                  distinctUntilChanged())
+          .subscribe(res => {
+            this.group.controls[type].setValue(res);
+            this.CheckIfDisableButtons(type);
+          });
 
 
     $input.unsubscribe();
+  }
+
+  private CheckIfDisableButtons(type: string): void {
+    if (!this.group.controls[type].value ||  this.group.controls[type].invalid) {
+      this.buttonsDisabled = true;
+    } else {
+      this.buttonsDisabled = false;
+    }
   }
 
 }
