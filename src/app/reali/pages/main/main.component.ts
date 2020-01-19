@@ -5,7 +5,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
 import { setName, setEmail, setPhone, resetForm, submitForm } from '../../store/actions/form.actions';
-import { selectIsFormSubmitted, selectForm } from '../../store/selectors/form.selectors';
+import { selectForm } from '../../store/selectors/form.selectors';
 
 @Component({
   selector: 'app-main',

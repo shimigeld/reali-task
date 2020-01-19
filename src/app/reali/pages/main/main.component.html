@@ -1,8 +1,8 @@
 <div gdAreas="header header | content content | footer footer" gdGap="2%" gdRows="auto auto auto" fxFlexFill>
     <div gdArea="header" fxLayoutAlign="space-around center">
-        <button mat-stroked-button value="name" (click)="onButtonClick($event.target.value)" [disabled]="buttonsDisabled">1</button>
-        <button mat-stroked-button value="email" (click)="onButtonClick($event.target.value)" [disabled]="buttonsDisabled">2</button>
-        <button mat-stroked-button value="phone" (click)="onButtonClick($event.target.value)" [disabled]="buttonsDisabled">3</button>
+        <button mat-stroked-button value="name" [ngClass]="{'selected-btn': fieldSelected == 'name'}" (click)="onButtonClick($event.target.value)" [disabled]="buttonsDisabled">1</button>
+        <button mat-stroked-button value="email" [ngClass]="{'selected-btn': fieldSelected == 'email'}" (click)="onButtonClick($event.target.value)" [disabled]="buttonsDisabled">2</button>
+        <button mat-stroked-button value="phone" [ngClass]="{'selected-btn': fieldSelected == 'phone'}" (click)="onButtonClick($event.target.value)" [disabled]="buttonsDisabled">3</button>
     </div>
   <div gdArea="content">
     <form [formGroup]="group">
