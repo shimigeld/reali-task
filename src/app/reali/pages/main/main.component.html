@@ -4,7 +4,7 @@
         <button mat-stroked-button value="email" [ngClass]="{'selected-btn': fieldSelected == 'email'}" (click)="onButtonClick($event.target.value)" [disabled]="buttonsDisabled">2</button>
         <button mat-stroked-button value="phone" [ngClass]="{'selected-btn': fieldSelected == 'phone'}" (click)="onButtonClick($event.target.value)" [disabled]="buttonsDisabled">3</button>
     </div>
-  <div gdArea="content">
+  <div gdArea="content" class="content">
     <form [formGroup]="group">
         <div *ngIf="this.formState !== 'submitted'" fxLayout="column" [ngSwitch]="fieldSelected" fxLayoutAlign="space-evenly center">
             <mat-form-field *ngSwitchCase="'name'">
