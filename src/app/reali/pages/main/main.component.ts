@@ -7,7 +7,8 @@ import { debounceTime, distinctUntilChanged, last } from 'rxjs/operators';
 
 import { State } from 'src/app/reducers';
 import { setName, setEmail, setPhone, resetForm, submitForm } from '../../store/actions/form.actions';
-import { selectForm } from '../../store/selectors/form.selectors';
+import { selectForm, selectIsFormValid } from '../../store/selectors/form.selectors';
+import { FormState } from '../../store/reducer/form.reducer';
 
 @Component({
   selector: 'app-main',
@@ -18,9 +19,12 @@ export class MainComponent implements OnInit, OnDestroy {
   public group: FormGroup;
   public fieldSelected = 'name';
   public buttonsDisabled = true;
-  public isSubmit = false;
+  public formState: string;
+  public isFormValid = false;
 
   private formStateSubscription: Subscription;
+  private isFormValidSubscription: Subscription;
+
   constructor(formBuilder: FormBuilder, private store: Store<State>) {
     this.group = formBuilder.group({
      name: ['', Validators.required],
@@ -30,11 +34,19 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.formStateSubscription = this.store.select(selectForm).subscribe(formState => {
+    this.formStateSubscription = this.store.select(selectForm).subscribe((formState: FormState) => {
       this.group.controls.name.setValue(formState.name);
       this.group.controls.email.setValue(formState.email);
       this.group.controls.phone.setValue(formState.phone);
-      this.isSubmit = formState.is_submit;
+      this.formState = formState.form_state;
+
+      if (this.formState === 'reset') {
+        this.group.reset();
+      }
+    });
+
+    this.store.select(selectIsFormValid).subscribe((isValid: boolean) => {
+      this.isFormValid = isValid;
     });
   }
 
@@ -76,25 +88,29 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   public onClearClick(): void {
-    this.group.reset();
     this.fieldSelected = 'name';
     this.buttonsDisabled = true;
     this.store.dispatch(resetForm());
   }
 
   private CheckIfDisableButtons(type: string): void {
-    if (this.group.controls[type]) {
-      if (!this.group.controls[type].value ||  this.group.controls[type].invalid) {
-        this.buttonsDisabled = true;
+    if (this.formState === 'submitted') {
+      this.buttonsDisabled = true;
+    } else {
+      if (this.group.controls[type]) {
+        if (!this.group.controls[type].value ||  this.group.controls[type].invalid) {
+          this.buttonsDisabled = true;
+        } else {
+          this.buttonsDisabled = false;
+        }
       } else {
         this.buttonsDisabled = false;
       }
-    } else {
-      this.buttonsDisabled = false;
     }
   }
 
   public ngOnDestroy(): void {
     this.formStateSubscription.unsubscribe();
+    this.isFormValidSubscription.unsubscribe();
   }
 }

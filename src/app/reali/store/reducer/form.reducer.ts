@@ -5,23 +5,23 @@ export interface FormState {
     name: string;
     email: string;
     phone: string;
-    is_submit: boolean;
+    form_state: string;
   }
 
 export const initialState: FormState = {
     name: '',
     email: '',
     phone: '',
-    is_submit: false
+    form_state: 'reset'
 };
 
 const formReducer = createReducer(
     initialState,
-    on(setName, (state, { name }) => ({ ...state, name})),
-    on(setEmail, (state, { email }) => ({ ...state, email})),
-    on(setPhone, (state, { phone }) => ({ ...state, phone})),
-    on(resetForm, (state) => ({ ...state, name: '', email: '', phone: '', is_submit: false})),
-    on(submitForm, (state) => ({ ...state, is_submit: true}))
+    on(setName, (state, { name }) => ({ ...state, name, form_state: 'onProgress'})),
+    on(setEmail, (state, { email }) => ({ ...state, email, form_state: 'onProgress'})),
+    on(setPhone, (state, { phone }) => ({ ...state, phone, form_state: 'onProgress'})),
+    on(resetForm, (state) => ({ ...state, name: '', email: '', phone: '', form_state: 'reset'})),
+    on(submitForm, (state) => ({ ...state, form_state: 'submitted'}))
 );
 
 export function FormReducer(state: FormState | undefined, action: Action) {

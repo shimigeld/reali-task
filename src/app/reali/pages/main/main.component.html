@@ -6,7 +6,7 @@
     </div>
   <div gdArea="content">
     <form [formGroup]="group">
-        <div *ngIf="!isSubmit" fxLayout="column" [ngSwitch]="fieldSelected" fxLayoutAlign="space-evenly center">
+        <div *ngIf="this.formState !== 'submitted'" fxLayout="column" [ngSwitch]="fieldSelected" fxLayoutAlign="space-evenly center">
             <mat-form-field *ngSwitchCase="'name'">
                 <input matInput placeholder="1. Name:" formControlName="name" (input)="onInputChange($event.target.value, fieldSelected)">
                 <mat-error *ngIf="this.group.controls.name.hasError('required')">
@@ -32,7 +32,7 @@
                 </mat-error>
             </mat-form-field>
         </div>
-        <div *ngIf="isSubmit" fxLayout="column"fxLayoutAlign="space-evenly center">
+        <div *ngIf="this.formState === 'submitted'" fxLayout="column"fxLayoutAlign="space-evenly center">
               <h4 style="text-align: center;">Submitted:</h4>
             <mat-form-field>
                 <input matInput placeholder="1. Name:" formControlName="name" [readonly]="true">
@@ -48,7 +48,7 @@
   </div>
   <div gdArea="footer">
     <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%">
-        <button mat-raised-button color="warn" [disabled]="this.group.invalid" (click)="onSubmitClick()">Submit</button>
+        <button mat-raised-button color="warn" [disabled]="!isFormValid" (click)="onSubmitClick()">Submit</button>
         <button mat-raised-button (click)="onClearClick()">Clear</button>
     </div>
   </div>
