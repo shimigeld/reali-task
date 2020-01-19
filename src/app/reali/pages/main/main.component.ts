@@ -39,7 +39,6 @@ export class MainComponent implements OnInit, OnDestroy {
   public onButtonClick(type: string): void {
     this.fieldSelected = type;
     this.CheckIfDisableButtons(type);
-    console.debug(type);
   }
 
   public onInputChange(input: string, type: string): void {
