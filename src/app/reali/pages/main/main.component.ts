@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { of, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, last } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
 import { setName, setEmail, setPhone, resetForm, submitForm } from '../../store/actions/form.actions';
@@ -19,8 +19,8 @@ export class MainComponent implements OnInit, OnDestroy {
   public isSubmit = false;
 
   private formStateSubscription: Subscription;
-  constructor(fb: FormBuilder, private store: Store<State>) {
-    this.group = fb.group({
+  constructor(formBuilder: FormBuilder, private store: Store<State>) {
+    this.group = formBuilder.group({
      name: ['', Validators.required],
      email: ['', [Validators.required, Validators.email]],
      phone: ['', [Validators.required, Validators.pattern(/^0\d([\d]{0,1})([-]{0,1})\d{7}$/)]]
@@ -41,29 +41,29 @@ export class MainComponent implements OnInit, OnDestroy {
     this.CheckIfDisableButtons(type);
   }
 
-  public onInputChange(input: string, type: string): void {
-    const $input = of(input).pipe(debounceTime(500),
-    distinctUntilChanged())
-    .subscribe(res => {
-      this.group.controls[type].setValue(res);
-      this.CheckIfDisableButtons(type);
+  public async onInputChange(input: string, type: string): Promise<void> {
+    const inputResult  = await of(input).pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      last())
+    .toPromise();
 
-      if (this.group.controls[type].valid) {
-        switch (type) {
-          case 'name':
-            this.store.dispatch(setName({name: this.group.controls[type].value}));
-            break;
-          case 'email':
-            this.store.dispatch(setEmail({email: this.group.controls[type].value}));
-            break;
-          case 'phone':
-            this.store.dispatch(setPhone({phone: this.group.controls[type].value}));
-            break;
-        }
+    this.group.controls[type].setValue(inputResult);
+    this.CheckIfDisableButtons(type);
+
+    if (this.group.controls[type].valid) {
+      switch (type) {
+        case 'name':
+          this.store.dispatch(setName({name: this.group.controls[type].value}));
+          break;
+        case 'email':
+          this.store.dispatch(setEmail({email: this.group.controls[type].value}));
+          break;
+        case 'phone':
+          this.store.dispatch(setPhone({phone: this.group.controls[type].value}));
+          break;
       }
-    });
-
-    $input.unsubscribe();
+    }
   }
 
   public onSubmitClick(): void {
